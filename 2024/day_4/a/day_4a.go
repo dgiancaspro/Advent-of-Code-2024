@@ -4,11 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
-	var dataList []string
+	var dataSlice []string
+	var searchStringRev []string
+	searchString := "XMAS"
+
 	if len(os.Args) != 2 {
 		fmt.Println("[!] Need a file name Please")
 		os.Exit(2)
@@ -19,7 +21,12 @@ func main() {
 	}
 	data := bufio.NewScanner(srcFile)
 	for data.Scan() {
-		dataList = strings.Split(data.Text(), "\n")
+		dataSlice = append(dataSlice, data.Text())
 	}
-	fmt.Println(dataList)
+	fmt.Println(dataSlice)
+	fmt.Println(searchString)
+	for i := len(searchString); i >= 0; i-- {
+		append(searchStringRev, searchString[i])
+	}
+	fmt.Println(searchStringRev)
 }
