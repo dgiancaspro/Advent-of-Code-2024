@@ -67,6 +67,7 @@ func safeTest(l []string) bool {
 
 		} else {
 			newl := dampner(l, i)
+			fmt.Println(newl)
 			for j := 0; j < len(newl)-1; j++ {
 				int1, _ := strconv.Atoi(newl[j])
 				int2, _ := strconv.Atoi(newl[j+1])

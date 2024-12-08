@@ -8,7 +8,6 @@ import (
 
 func main() {
 	var dataSlice []string
-	var searchStringRev []string
 	searchString := "XMAS"
 
 	if len(os.Args) != 2 {
@@ -25,8 +24,4 @@ func main() {
 	}
 	fmt.Println(dataSlice)
 	fmt.Println(searchString)
-	for i := len(searchString); i >= 0; i-- {
-		append(searchStringRev, searchString[i])
-	}
-	fmt.Println(searchStringRev)
 }
