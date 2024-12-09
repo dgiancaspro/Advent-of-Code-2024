@@ -8,22 +8,54 @@ import (
 	"strings"
 )
 
-func dampner(l []string, e int) []string {
-	// This function removes the Element at e and returns the
-	// Slice in the same order
-	var t []string
-	for i := 0; i < len(l); i++ {
-		if i == e {
-			continue
-		} else {
-			t = append(t, l[i])
+func dampner(l []string) bool {
+	/*	This function removes elements one at a time and sees if there is a valid
+		Record */
+
+	var safe bool
+	for e := 0; e < len(l); e++ {
+		var t []string
+		for i := 0; i < len(l); i++ {
+			if i == e {
+				continue
+			} else {
+				t = append(t, l[i])
+			}
 		}
+		var asc, desc bool
+		int1, _ := strconv.Atoi(l[0])
+		int2, _ := strconv.Atoi(l[1])
+		if int1 < int2 {
+			asc = true
+		} else if int1 > int2 {
+			desc = true
+		} else {
+			continue
+		}
+		for i := 0; i < len(t)-1; i++ {
+			int1, _ := strconv.Atoi(t[i])
+			int2, _ := strconv.Atoi(t[i+1])
+			if asc && int1 < int2 && int2-int1 < 4 {
+				safe = true
+				continue
+			} else if desc && int2 < int1 && int1-int2 < 4 {
+				safe = true
+				continue
+			} else {
+				safe = false
+				continue
+
+			}
+		}
+		fmt.Printf("%s: %t\n", t, safe)
 	}
-	return t
+	fmt.Printf("%s: %t\n", l, safe)
+	return safe
 }
 
+/*
 func safeTest(l []string) bool {
-	var asc, desc bool
+	var asc, desc, safe bool
 	// Determine which direction the data is going Ascending or Descending
 	// By checking the first 2 values
 
@@ -33,20 +65,9 @@ func safeTest(l []string) bool {
 		asc = true
 	} else if int1 > int2 {
 		desc = true
-		//if the first 2 vaues are equal remove the first value and check again
-
 	} else {
-		l = dampner(l, 0)
-		int1, _ := strconv.Atoi(l[0])
-		int2, _ := strconv.Atoi(l[1])
-		if int1 < int2 {
-			asc = true
-		} else if int1 > int2 {
-			desc = true
-			// If the first 2 values are equal again return false
-		} else {
-			return false
-		}
+		safe = dampner(l)
+		return safe
 	}
 
 	// Now we step through the readings and check the two rule
@@ -62,31 +83,33 @@ func safeTest(l []string) bool {
 		} else if desc && int2 < int1 && int1-int2 < 4 {
 			continue
 
-			// If values are deemed unsafe use the dampner function to remoove the current value
+			// If values are deemed unsafe use the dampner function to remove the current value
 			// Check the updated Slice against the same rules
 
 		} else {
-			newl := dampner(l, i)
-			fmt.Println(newl)
-			for j := 0; j < len(newl)-1; j++ {
-				int1, _ := strconv.Atoi(newl[j])
-				int2, _ := strconv.Atoi(newl[j+1])
-				if asc && int1 < int2 && int2-int1 < 4 {
-					continue
-				} else if desc && int2 < int1 && int1-int2 < 4 {
-					continue
-					// If the new Slice fails again the list unsafe
-
-				} else {
-					return false
+			for m := 0; m < i+1; m++ {
+				newl := dampner(l, m)
+				fmt.Println(newl)
+				for j := 0; j < len(newl)-1; j++ {
+					int1, _ := strconv.Atoi(newl[j])
+					int2, _ := strconv.Atoi(newl[j+1])
+					if asc && int1 < int2 && int2-int1 < 4 {
+						continue
+					} else if desc && int2 < int1 && int1-int2 < 4 {
+						continue
+						// If the new Slice fails again the list unsafe
+					} else {
+						safe = false
+					}
 				}
 			}
 		}
 	}
 	// Finally if everything is correct return True
 
-	return true
+	return safe
 }
+*/
 
 func main() {
 	var ans int
@@ -100,7 +123,7 @@ func main() {
 	src := bufio.NewScanner(f)
 	for src.Scan() {
 		l := strings.Split(src.Text(), " ")
-		if safeTest(l) {
+		if dampner(l) {
 			ans++
 		}
 	}
