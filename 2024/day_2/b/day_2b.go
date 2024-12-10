@@ -9,7 +9,7 @@ import (
 )
 
 func dampner(l []string) bool {
-	/*	This function removes elements one at a time and sees if there is a valid
+	/*	This function removes elements f the record one at a time and sees if there is a valid
 		Record */
 
 	var safe bool
@@ -23,8 +23,8 @@ func dampner(l []string) bool {
 			}
 		}
 		var asc, desc bool
-		int1, _ := strconv.Atoi(l[0])
-		int2, _ := strconv.Atoi(l[1])
+		int1, _ := strconv.Atoi(t[0])
+		int2, _ := strconv.Atoi(t[1])
 		if int1 < int2 {
 			asc = true
 		} else if int1 > int2 {
@@ -32,6 +32,7 @@ func dampner(l []string) bool {
 		} else {
 			continue
 		}
+
 		for i := 0; i < len(t)-1; i++ {
 			int1, _ := strconv.Atoi(t[i])
 			int2, _ := strconv.Atoi(t[i+1])
@@ -43,73 +44,18 @@ func dampner(l []string) bool {
 				continue
 			} else {
 				safe = false
-				continue
-
+				break
 			}
 		}
-		fmt.Printf("%s: %t\n", t, safe)
-	}
-	fmt.Printf("%s: %t\n", l, safe)
-	return safe
-}
-
-/*
-func safeTest(l []string) bool {
-	var asc, desc, safe bool
-	// Determine which direction the data is going Ascending or Descending
-	// By checking the first 2 values
-
-	int1, _ := strconv.Atoi(l[0])
-	int2, _ := strconv.Atoi(l[1])
-	if int1 < int2 {
-		asc = true
-	} else if int1 > int2 {
-		desc = true
-	} else {
-		safe = dampner(l)
-		return safe
-	}
-
-	// Now we step through the readings and check the two rule
-	// 1. No Value Changes by more than 3
-	// 2. The values are going in the same direction i.e. ascending or descending
-	// If the values are safe move to the next value
-
-	for i := 0; i < len(l)-1; i++ {
-		int1, _ := strconv.Atoi(l[i])
-		int2, _ := strconv.Atoi(l[i+1])
-		if asc && int1 < int2 && int2-int1 < 4 {
-			continue
-		} else if desc && int2 < int1 && int1-int2 < 4 {
-			continue
-
-			// If values are deemed unsafe use the dampner function to remove the current value
-			// Check the updated Slice against the same rules
-
-		} else {
-			for m := 0; m < i+1; m++ {
-				newl := dampner(l, m)
-				fmt.Println(newl)
-				for j := 0; j < len(newl)-1; j++ {
-					int1, _ := strconv.Atoi(newl[j])
-					int2, _ := strconv.Atoi(newl[j+1])
-					if asc && int1 < int2 && int2-int1 < 4 {
-						continue
-					} else if desc && int2 < int1 && int1-int2 < 4 {
-						continue
-						// If the new Slice fails again the list unsafe
-					} else {
-						safe = false
-					}
-				}
-			}
+		// If the readings in the current record are safve return true
+		if safe {
+			return true
 		}
-	}
-	// Finally if everything is correct return True
 
-	return safe
+	}
+	// If the record is unsafe regardless of wht reading we remove return false
+	return false
 }
-*/
 
 func main() {
 	var ans int
