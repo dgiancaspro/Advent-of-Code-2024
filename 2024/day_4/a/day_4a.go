@@ -1,3 +1,10 @@
+/*
+	Notes
+
+Need to figure out how to do a 2 dimensional slice
+The basic Idea I'm goig for here is to set the word search up as a two dimensional Array
+Then use the sliding window approach
+*/
 package main
 
 import (
@@ -52,4 +59,4 @@ func main() {
 // 	answer += hSearch(dataSlice[i])
 // 	revLine := reverse(dataSlice[i])
 // 	answer += hSearch(revLine)
-// } The Quick Brown fox jumped over the lazy dogs 76 +
+// }
