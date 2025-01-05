@@ -1,9 +1,7 @@
 /*
-	Notes
-
-Need to figure out how to do a 2 dimensional slice
-The basic Idea I'm goig for here is to set the word search up as a two dimensional Array
-Then use the sliding window approach
+Notes
+A strings Characters can be accessed indivdually but they are returned as bytes.  You need to convert
+the	back to string characters with the string function ... string(line[index])
 */
 package main
 
@@ -11,29 +9,30 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"reflect"
-	"regexp"
+	//"reflect"
+	//"regexp"
 )
 
-func hSearch(line string) int {
-	// fmt.Println(line)
-	searchString := "XMAS"
-	reSearch := regexp.MustCompile(searchString)
-	lineMatch := reSearch.FindAllString(line, -1)
-	return len(lineMatch)
-}
+// func hSearch(line string) int {
+// 	// fmt.Println(line)
+// 	searchString := "XMAS"
+// 	reSearch := regexp.MustCompile(searchString)
+// 	lineMatch := reSearch.FindAllString(line, -1)
+// 	return len(lineMatch)
+// }
 
-func reverse(line string) string {
-	revLine := ""
-	for i := len(line) - 1; i >= 0; i-- {
-		revLine += string(line[i])
-	}
-	// fmt.Println(line, revLine)
-	return revLine
-}
+// func reverse(line string) string {
+// 	revLine := ""
+// 	for i := len(line) - 1; i >= 0; i-- {
+// 		revLine += string(line[i])
+// 	}
+// 	// fmt.Println(line, revLine)
+// 	return revLine
+// }
 
 func main() {
 	var dataSlice []string
+
 	var answer int
 
 	if len(os.Args) != 2 {
@@ -48,15 +47,17 @@ func main() {
 	for data.Scan() {
 		dataSlice = append(dataSlice, data.Text())
 	}
-	matrix := len(dataSlice[0])
-	// var dataMatrix [matrix][matrix]string
-	fmt.Println(dataSlice)
-	fmt.Println(reflect.TypeOf(matrix), matrix)
-	fmt.Printf("[+] Answer:%d\n", answer)
-}
+	for i, val := range dataSlice {
+		fmt.Printf("[-] Line number %d\n", i)
+		for j := 0; j < len(val); j++ {
+			fmt.Printf("Char %d: %s\n", j, string(val[j]))
 
-// for i := 0; i < len(dataSlice); i++ {
-// 	answer += hSearch(dataSlice[i])
-// 	revLine := reverse(dataSlice[i])
-// 	answer += hSearch(revLine)
-// }
+			// answer += hSearch(dataSlice[i])
+			// revLine := reverse(dataSlice[i])
+			// answer += hSearch(revLine)
+		}
+
+	}
+
+	fmt.Println(answer)
+}
