@@ -32,7 +32,8 @@ import (
 
 func main() {
 	var dataSlice []string
-
+	searchString := "XMAS"
+	//revString := "SAMX"
 	var answer int
 
 	if len(os.Args) != 2 {
@@ -47,9 +48,10 @@ func main() {
 	for data.Scan() {
 		dataSlice = append(dataSlice, data.Text())
 	}
+	fmt.Println(dataSlice)
 	for i, val := range dataSlice {
 		fmt.Printf("[-] Line number %d\n", i)
-		for j := 0; j < len(val); j++ {
+		for j := 0; j < len(val)-len(searchString); j++ {
 			fmt.Printf("Char %d: %s\n", j, string(val[j]))
 
 			// answer += hSearch(dataSlice[i])
@@ -58,6 +60,6 @@ func main() {
 		}
 
 	}
-
+	fmt.Println(dataSlice)
 	fmt.Println(answer)
 }
